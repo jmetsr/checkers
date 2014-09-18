@@ -7,7 +7,7 @@ class Board
 
   def slide(start_pos,end_pos)
     if self[start_pos] != nil
-      self[start_pos] = nil if self[start_pos].perform_slide(end_pos)
+      self[start_pos].perform_slide(end_pos)
     end
   end
 
@@ -17,7 +17,7 @@ class Board
 
   def jump(start_pos,end_pos)
     if self[start_pos] != nil
-      self[start_pos] = nil if self[start_pos].perform_jump(end_pos)
+      self[start_pos].perform_jump(end_pos)
     end
   end
 

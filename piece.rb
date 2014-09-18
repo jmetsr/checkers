@@ -15,6 +15,7 @@ class Piece
     return false if board[end_pos] != nil
     return false if !slide_dirs.include?(move)
     return false if !on_board?(end_pos)
+
     set_position(end_pos)
     promote if maybe_promote?
     true
@@ -36,6 +37,23 @@ class Piece
     true
   end
 
+  def perform_moves!(move_sequence)
+    if move_sequence.length == 1
+      unless perform_slide(move_sequence[0])
+        unless perform_jump(move_sequence[0])
+          raise InvalidMoveError.new "not a valid move sequence"
+        end
+      end
+    else
+      move_sequence.each do |move|
+         unless perform_jump(move)
+           raise InvalidMoveError.new "not a valid move sequence"
+         end
+      end
+    end
+
+    nil
+  end
 
   def promote
     @king = true
@@ -88,8 +106,12 @@ class Piece
     [pos1[0]-pos2[0],pos1[1]-pos2[1]]
   end
   def set_position(pos)
+    @board[@position] = nil unless @position == nil
     @position = pos
     @board[pos] = self
   end
 
+end
+
+class InvalidMoveError < StandardError
 end

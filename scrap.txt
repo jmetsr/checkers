@@ -1,0 +1,5 @@
+  def perform_moves!(move_sequence)
+    if move_sequence.length == 1
+      unless perform_slide(move_sequence[0])
+        perform_jump
+  end
