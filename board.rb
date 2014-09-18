@@ -25,9 +25,9 @@ class Board
     (0..7).each do |row_index|#loop through board positions
       (0..7).each do |col_index|
         if starts_with_red([row_index, col_index]) #checks if spot gets a red piece
-          Piece.new('red',[row_index, col_index],self) #sets up red piece
+          Piece.new(:red,[row_index, col_index],self) #sets up red piece
         elsif starts_with_black([row_index, col_index]) #check if spot gets black piece
-          Piece.new('black',[row_index, col_index],self) #sets up black piece
+          Piece.new(:black,[row_index, col_index],self) #sets up black piece
         else
         end
       end

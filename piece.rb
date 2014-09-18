@@ -17,7 +17,7 @@ class Piece
     return false if !on_board?(end_pos)
     set_position(end_pos)
     promote if maybe_promote?
-    return true
+    true
   end
 
   def perform_jump(end_pos)
@@ -36,48 +36,49 @@ class Piece
     true
   end
 
+
   def promote
     @king = true
   end
 
   def maybe_promote?
-    if position[0] == 7 && color == "red"
-      return true
-    elsif position[0] == 0 && color == "black"
-      return true
-    else
-      return false
-    end
+    (position[0] == 7 && color == :red) || (position[0] == 0 && color == :black)
   end
 
   def slide_dirs
-    return [[1,-1], [1, 1]] if color == "red" && king == false
-    return [[-1,1],[-1,-1]] if color == "black" && king == false
+    return [[1,-1], [1, 1]] if color == :red && king == false
+    return [[-1,1],[-1,-1]] if color == :black && king == false
     return [[1,-1], [1, 1], [-1,1],[-1,-1]] if king
   end
 
   def jump_dirs
-    return [[2, 2],[2, -2]] if color == "red" && king == false
-    return [[-2,2],[-2,-2]] if color == "black" && king == false
+    return [[2, 2],[2, -2]] if color == :red && king == false
+    return [[-2,2],[-2,-2]] if color == :black && king == false
     return [[2,-2],[-2,-2],[2, 2],[-2, 2]] if king
   end
 
   def render
-    return "r" if self.color == "red" && !self.king
-    return "b" if self.color == "black" && !self.king
-    return "R" if self.color == "red" && self.king
-    return "B" if self.color == "black" && self.king
+    return "r" if self.color == :red && !self.king
+    return "b" if self.color == :black && !self.king
+    return "R" if self.color == :red && self.king
+    return "B" if self.color == :black && self.king
   end
 
   def on_board?(pos)
-    pos[0].between?(0,7) && pos[1].between?(0,7)
+    pos.all? { |x| x.between?(0,7) }
   end
 
   def piece_to_jump_over(jump_move) #returns pos of piece to jump
-    return vector_addition([1,  1],position) if jump_move == [ 2, 2]
-    return vector_addition([-1,-1],position) if jump_move == [-2,-2]
-    return vector_addition([-1, 1],position) if jump_move == [-2, 2]
-    return vector_addition([ 1,-1],position) if jump_move == [ 2,-2]
+    case jump_move
+    when [2,  2]
+      return vector_addition([1,  1],position)
+    when [-2,-2]
+      return vector_addition([-1,-1],position)
+    when [-2, 2]
+      return vector_addition([-1, 1],position)
+    when [ 2,-2]
+      return vector_addition([ 1,-1],position)
+    end
   end
 
   def vector_addition(pos1,pos2)
