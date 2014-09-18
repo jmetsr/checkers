@@ -55,6 +55,10 @@ class Piece
     nil
   end
 
+  def dup(new_board)
+    Piece.new(@color,@position.dup,new_board,@king)
+  end
+
   def promote
     @king = true
   end

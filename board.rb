@@ -1,8 +1,8 @@
 require_relative 'piece'
 class Board
-  def initialize
+  def initialize(set_up = true)
     @grid = Array.new(8){Array.new(8)}
-    set_up_board
+    set_up_board if set_up
   end
 
   def slide(start_pos,end_pos)
@@ -20,6 +20,16 @@ class Board
       self[start_pos].perform_jump(end_pos)
     end
   end
+
+  def dup
+    new_board = Board.new(false)
+    self.pieces.each do |piece|
+      piece.dup(new_board)
+    end
+
+    new_board
+  end
+
 
   def set_up_board
     (0..7).each do |row_index|#loop through board positions
@@ -40,6 +50,10 @@ class Board
 
   def starts_with_black(pos)
     ((pos[0]+ pos[1]) % 2 == 0) && (pos[0] > 4)
+  end
+
+  def pieces
+    @grid.flatten.compact
   end
 
   def [](pos)
