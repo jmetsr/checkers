@@ -5,6 +5,18 @@ class board
     set_up_board
   end
 
+  def slide(start_pos,end_pos)
+    self[start_pos].perform_slide if self[start_pos] != nil
+  end
+
+  def display
+    puts render
+  end
+
+  def jump(start_pos,end_pos)
+    self[start_pos].perform_jump if self[start_pos] != nil
+  end
+
   def set_up_board
     (0..7).each do |row_index|#loop through board positions
       0..7.each do |col_index|
@@ -32,6 +44,25 @@ class board
 
   def []=(pos,object)
     @board[pos[0]][pos[1]] = object
+  end
+
+  def render
+    top_row = ""
+    ('a'..'h').each{|letter| top_row += (' ' + letter)}
+    bottom_rows = ""
+    (0..7).each do |i|
+      row = "#{i+1}"
+      (0..7).each do |col|
+        if self[row,col] == nil
+          row += "\u25A1"
+        else
+          row += self[row,col].render
+        end
+        bottom_rows += row + "\n"
+      end
+    end
+
+    top_row + "\n" + bottom_rows
   end
 
 
