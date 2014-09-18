@@ -115,6 +115,18 @@ class Piece
     end
   end
 
+  def can_move?
+    possible_moves = []
+    slide_dirs+jump_dirs.each do |move|
+      possible_moves += vector_addition(@position,move)
+    end
+    return false if possible_moves == []
+    can_i = true
+    possible_moves.each { |move| can_i = can_i || valid_move_seq?([move])}
+
+    can_i
+  end
+
   def vector_addition(pos1,pos2)
     [pos1[0]+pos2[0],pos1[1]+pos2[1]]
   end
