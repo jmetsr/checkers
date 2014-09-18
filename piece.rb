@@ -55,6 +55,18 @@ class Piece
     nil
   end
 
+  def valid_move_seq?(move_sequence)
+    new_board = @board.dup
+    begin
+      new_board[@position].perform_moves!(move_sequence)
+    rescue InvalidMoveError => e
+      return false
+    else
+      return true
+    end
+
+  end
+
   def dup(new_board)
     Piece.new(@color,@position.dup,new_board,@king)
   end
