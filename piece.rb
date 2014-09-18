@@ -37,7 +37,7 @@ class Piece
   end
 
   def promote
-    king = true
+    @king = true
   end
 
   def maybe_promote?
@@ -57,8 +57,8 @@ class Piece
   end
 
   def jump_dirs
-    return [[2, 2],[-2, 2]] if color == 'red' && king == false
-    return [[2,-2],[-2,-2]] if color == 'black' && king == false
+    return [[2, 2],[2, -2]] if color == "red" && king == false
+    return [[-2,2],[-2,-2]] if color == "black" && king == false
     return [[2,-2],[-2,-2],[2, 2],[-2, 2]] if king
   end
 

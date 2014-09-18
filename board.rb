@@ -56,7 +56,6 @@ class Board
     bottom_rows = ""
     (0..7).each do |i|
       row = "#{i+1}"
-
       (0..7).each do |col|
         if self[[i,col]] == nil
           row += "\u25A1"+" "
@@ -66,7 +65,6 @@ class Board
       end
       bottom_rows += row + "\n"
     end
-
     top_row + "\n" + bottom_rows
   end
 
